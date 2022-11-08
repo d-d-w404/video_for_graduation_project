@@ -4,7 +4,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 #import zhihu
-
+import os
 import cv2
 import random
 import time
@@ -17,9 +17,11 @@ global img
 global point1, point2
 global g_rect
 
+global text_0
 global text_1
 global text_2
 global text_3
+text_0=""
 text_1=""
 text_2=""
 text_3=""
@@ -29,9 +31,9 @@ global source_file_name
 global target_file_name
 global target_file_path
 
-source_file_name=""
+source_file_name="C:/Users/Wander/Desktop/Graduation_Project/train"
 target_file_name=""
-target_file_path=""
+target_file_path="C:/Users/Wander/Desktop/Graduation_Project/output"
 
 class Video(QWidget):
     def __init__(self):
@@ -107,7 +109,7 @@ class Video(QWidget):
         self.tree.move(960,0)
         self.tree.setFixedSize(430,500)
         self.tree.setModel(self.model)
-        self.tree.setRootIndex(self.model.index('F:/train'))
+        self.tree.setRootIndex(self.model.index(source_file_name))
         self.tree.clicked.connect(self.show_info)
 
         self.tree.doubleClicked.connect(self.tree_cilcked)
@@ -566,21 +568,30 @@ class Video(QWidget):
         pos_human=[0,0,0,0]
         pos_ball=[0,0,0,0]
 
+        global text_0
         global text_1
         global text_2
         global text_3
 
-        text_1 = '左: h({},{})({},{}) b({},{})({},{})'.format(0,0,0,0,0,0,0,0)
-        text_2 = '中: h({},{})({},{}) b({},{})({},{})'.format(0,0,0,0,0,0,0,0)
-        text_3 = '右: h({},{})({},{}) b({},{})({},{})'.format(0,0,0,0,0,0,0,0)
+        # text_1 = '左: h({},{})({},{}) b({},{})({},{})'.format(0,0,0,0,0,0,0,0)
+        # text_2 = '中: h({},{})({},{}) b({},{})({},{})'.format(0,0,0,0,0,0,0,0)
+        # text_3 = '右: h({},{})({},{}) b({},{})({},{})'.format(0,0,0,0,0,0,0,0)
+
+        # 最终决定输出文件格式后的要求：（去除了ball,加入了左右帧位置，去除了括号）
+        text_0 = '{},{}'.format(0,0)
+        text_1 = '{},{},{},{}'.format(0,0,0,0)
+        text_2 = '{},{},{},{}'.format(0,0,0,0)
+        text_3 = '{},{},{},{}'.format(0,0,0,0)
+
 
         self.label_store_data.setText(
             "文件名称:" + target_file_name +"\n"+
             "文件地址:"+ target_file_path+"\n" +
-            text_1 + "\n" + text_2 + "\n" + text_3 + "\n"+"\n" +
+            text_0 + "\n" + text_1 + "\n" + text_2 + "\n" + text_3 + "\n"+
             "        按Enter键将数据导入文件")
 
         #str(pos_human)+str(pos_ball) +
+
 
     def keyPressEvent(self, QKeyEvent):  # 键盘某个键被按下时调用
         # 参数1  控件
@@ -758,6 +769,7 @@ class Video(QWidget):
         global pos_human
         global pos_ball
 
+        global text_0
         global text_1
         global text_2
         global text_3
@@ -772,42 +784,54 @@ class Video(QWidget):
 
         if QKeyEvent.key() == Qt.Key_Space and self.lock:
 
-            human_x0=pos_human[0]
-            human_y0 =pos_human[1]
-            human_x1 =pos_human[2]
-            human_y1 =pos_human[3]
-            ball_x0=pos_ball[0]
-            ball_y0 =pos_ball[1]
-            ball_x1 =pos_ball[2]
-            ball_y1 =pos_ball[3]
+            human_x0 = pos_human[0]
+            human_y0 = pos_human[1]
+            human_x1 = pos_human[2]
+            human_y1 = pos_human[3]
+            ball_x0 = pos_ball[0]
+            ball_y0 = pos_ball[1]
+            ball_x1 = pos_ball[2]
+            ball_y1 = pos_ball[3]
 
             #通过目前滑动条的位置判断
+            # if self.sld.value()==self.memo[-1][0]:
+            #     text_1='左: h({},{})({},{}) b({},{})({},{})'.format(human_x0, human_y0, human_x1, human_y1,
+            #                                           ball_x0,ball_y0,ball_x1,ball_y1)
+            # elif self.sld.value()==self.memo[-1][1]:
+            #     text_2='中: h({},{})({},{}) b({},{})({},{})'.format(human_x0, human_y0, human_x1, human_y1,
+            #                                           ball_x0,ball_y0,ball_x1,ball_y1)
+            # elif self.sld.value()==self.memo[-1][2]:
+            #     text_3='右: h({},{})({},{}) b({},{})({},{})'.format(human_x0, human_y0, human_x1, human_y1,
+            #                                           ball_x0,ball_y0,ball_x1,ball_y1)
+
+            #最终决定输出文件格式后的要求：（去除了ball,加入了左右帧位置，去除了括号）
             if self.sld.value()==self.memo[-1][0]:
-                text_1='左: h({},{})({},{}) b({},{})({},{})'.format(human_x0, human_y0, human_x1, human_y1,
-                                                      ball_x0,ball_y0,ball_x1,ball_y1)
+                text_0='{},{}'.format(self.memo[-1][0],self.memo[-1][2])
+                text_1='{},{},{},{}'.format(human_x0, human_y0, human_x1, human_y1,)
             elif self.sld.value()==self.memo[-1][1]:
-                text_2='中: h({},{})({},{}) b({},{})({},{})'.format(human_x0, human_y0, human_x1, human_y1,
-                                                      ball_x0,ball_y0,ball_x1,ball_y1)
+                text_2='{},{},{},{}'.format(human_x0, human_y0, human_x1, human_y1,)
             elif self.sld.value()==self.memo[-1][2]:
-                text_3='右: h({},{})({},{}) b({},{})({},{})'.format(human_x0, human_y0, human_x1, human_y1,
-                                                      ball_x0,ball_y0,ball_x1,ball_y1)
+                text_0 = '{},{}'.format(self.memo[-1][0], self.memo[-1][2])
+                text_3='{},{},{},{}'.format(human_x0, human_y0, human_x1, human_y1,)
 
             #self.label_store_data.setText("文件名称:"+target_file_name+"\n"+text_1+"\n"+text_2+"\n"+text_3+"\n"+str(pos_human)+str(pos_ball) +"\n" +"按Enter键将数据导入文件")
             self.label_store_data.setText(
                 "文件名称:" + target_file_name + "\n" +
                 "文件地址:" + target_file_path+"\n" +
-                text_1 + "\n" + text_2 + "\n" + text_3 + "\n" + "\n" +
+                text_0 + "\n" + text_1 + "\n" + text_2 + "\n" + text_3 + "\n" +
                 "        按Enter键将数据导入文件")
 
 
         if QKeyEvent.key() == Qt.Key_M and self.lock:
 
-            print(target_file_path)
-            #target_file_path="C:/Users/LENOVO/Desktop/x"
-            print(target_file_path+"/"+target_file_name[0:-4])
-            f = open(target_file_path+"/"+target_file_name[0:-4]+".txt", 'w')
-            f.write(text_1+"\n"+text_2+"\n"+text_3)
-            f.close()
+            #先看文件是否已经存在了
+            if os.path.exists(target_file_path+"/"+target_file_name[0:-4]+".txt"):
+                Warming = QMessageBox.warning(self, "Warming", "已经存在同名的文件了！！！",
+                                                   QMessageBox.Yes)
+            else:
+                f = open(target_file_path+"/"+target_file_name[0:-4]+".txt", 'w')
+                f.write(text_0+"\n"+text_1+"\n"+text_2+"\n"+text_3)
+                f.close()
 
             #这个函数就是为了：当我存储数据或者更换了新的视频源后刷新暂存的数据
             self.temp_clean()
