@@ -174,6 +174,13 @@ class Video(QWidget):
         self.btn_file_path.move(350+300, 580)
         self.btn_file_path.clicked.connect(self.slotFile)
 
+        # 我的视频数据来源的文件夹
+        self.btn_file_path = QPushButton(self)
+        self.btn_file_path.setText("SOURCE_PATH")
+        self.btn_file_path.setFixedSize(100,50)
+        self.btn_file_path.move(350+150, 580)
+        self.btn_file_path.clicked.connect(self.slotSourceFile)
+
         # 键盘
         self.label_key=QLabel('',self)
         self.label_key.setFixedSize(0, 0)
@@ -359,6 +366,15 @@ class Video(QWidget):
 
         #选定文件夹后需要马上 在界面上显现出来
         self.temp_clean()
+
+    def slotSourceFile(self):
+        filename= QFileDialog.getExistingDirectory(self,"file_path","")
+        global source_file_name
+        source_file_name=filename
+
+        self.tree.setRootIndex(self.model.index(source_file_name))
+
+
 
 
 
