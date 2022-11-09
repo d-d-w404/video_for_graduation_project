@@ -510,7 +510,7 @@ class Video(QWidget):
             "文件名称:" + target_file_name +"\n"+
             "文件地址:"+ target_file_path+"\n" +
             text_0 + "\n" + text_1 + "\n" + text_2 + "\n" + text_3 + "\n"+
-            "        按Enter键将数据导入文件")
+            "        按M键将数据导入文件")
 
 
 
