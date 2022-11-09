@@ -3,11 +3,8 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-#import zhihu
 import os
 import cv2
-import random
-import time
 from PyQt5.QtCore import QTimer, QRect
 from PyQt5.QtCore import Qt
 
@@ -77,15 +74,7 @@ class Video(QWidget):
         self.target_label=""
         self.left_right_lock=False
 
-
         self.temp_filename=''
-
-
-
-
-
-
-
 
 
         # 外框
@@ -163,13 +152,6 @@ class Video(QWidget):
         self.btn.move(50, 580)
         self.btn.clicked.connect(self.slotStart)
 
-        # 检测按键
-        # self.btn_detect = QPushButton(self)
-        # self.btn_detect.setText("Detect")
-        # self.btn_detect.move(400, 600)
-        # self.btn_detect.setStyleSheet("QPushButton{background:red;}")  # 没检测红色，检测绿色
-        # self.btn_detect.clicked.connect(self.detection)
-
         # 关闭视频按钮
         self.btn_stop = QPushButton(self)
         self.btn_stop.setText("Stop")
@@ -224,19 +206,12 @@ class Video(QWidget):
         file_path = self.model.filePath(index)
         global target_file_name
         target_file_name=file_name
-        #print(file_path)
-        #file_info = 'File Name: {}\nFile Path: {}'.format(file_name, file_path)
-        #self.info_label.setText(file_info)
 
     def tree_cilcked(self, Qmodelidx):
-        # print(self.model.filePath(Qmodelidx))
-        # print(self.model.fileName(Qmodelidx))
 
         self.temp_filename=self.model.filePath(Qmodelidx)
-        #print(self.temp_filename[-4:])
         if self.temp_filename[-4:]==".avi" or self.temp_filename[-4:]==".mp4":
             self.slotStart_plus()
-        #print(self.model.fileInfo(Qmodelidx))
         # 还有比如 self.model.fileInfo(Qmodelidx).
 
 
@@ -252,8 +227,6 @@ class Video(QWidget):
         global clean_out
         clean_out = False
 
-
-
         videoName, _ = QFileDialog.getOpenFileName(self, "Open", "", "*.mp4;;*.avi;;All Files(*)")
         # 这个函数就是为了：当我存储数据或者更换了新的视频源后刷新暂存的数据
         global target_file_name
@@ -263,7 +236,6 @@ class Video(QWidget):
 
         if videoName != "":  # “”为用户取消
             self.cap = cv2.VideoCapture(videoName)
-
 
             #视频总共的帧数
             self.frame_all = (int)(self.cap.get(7)-1)#这里减1是为了避免拖动进度条到最后时发生卡住的bug
@@ -286,12 +258,6 @@ class Video(QWidget):
 
             # minus = int((1 / self.frame_all) * 900)
             self.right_label.move(950 - 1 - 9, 500)
-
-
-            #下面目前不用
-            # self.fcount = self.cap.get(7)-1  # 获得视频总帧数
-            # self.seccount = int(self.fcount / self.fps)  # 计算出视频总时长，单位：秒
-            # self.start_time=time.time()
 
             #通过导入新的视频，进度条也需要相应的改变
             self.sld.setMaximum(self.frame_all)
@@ -344,11 +310,6 @@ class Video(QWidget):
         # minus = int((1 / self.frame_all) * 900)
         self.right_label.move(950 - 1 - 9, 500)
 
-        # 下面目前不用
-        # self.fcount = self.cap.get(7)-1  # 获得视频总帧数
-        # self.seccount = int(self.fcount / self.fps)  # 计算出视频总时长，单位：秒
-        # self.start_time=time.time()
-
         # 通过导入新的视频，进度条也需要相应的改变
         self.sld.setMaximum(self.frame_all)
         self.sld.setValue(1)
@@ -393,18 +354,11 @@ class Video(QWidget):
 
     def slotFile(self):
         filename= QFileDialog.getExistingDirectory(self,"file_path","")
-        #if filename != "":  # “”为用户取消 "Open", "", "*.mp4;;*.avi;;All Files(*)"
         global target_file_path
         target_file_path=filename
-        #print("this is filename"+filename)
-
 
         #选定文件夹后需要马上 在界面上显现出来
         self.temp_clean()
-
-
-
-
 
 
 
@@ -422,16 +376,6 @@ class Video(QWidget):
                 self.frame_count=int(self.cap.get(1))
                 self.sld.setValue(self.frame_count)
 
-
-                #这是基于计时器的播放流程
-                # self.curtime=time.time()-self.start_time#是毫秒
-                # zhen=(self.curtime/self.seccount)*self.fcount
-                # self.frame_count = zhen
-                # self.cap.set(1, self.frame_count)
-                # self.sld.setValue(self.frame_count)
-
-
-
                 # 显示人数label
                 #self.label_num = QLabel(self)
                 self.label_num.setText("视频相关信息：" +
@@ -445,34 +389,17 @@ class Video(QWidget):
                 self.label_num.setStyleSheet("QLabel{background:aqua;}")
 
 
-                # if self.detectFlag == True:
-                #     # 检测代码self.frame
-                #     self.label_num.setText("There are " + str(5) + " people.")
-
                 height, width, bytesPerComponent = frame.shape
                 bytesPerLine = bytesPerComponent * width
                 q_image = QImage(frame.data, width, height, bytesPerLine,
                                  QImage.Format_RGB888).scaled(self.label.width(), self.label.height())
                 self.label.setPixmap(QPixmap.fromImage(q_image))
 
-
-
                 if self.lock == False:
                     self.lock=True
                     self.memo.append([1,1,self.frame_all])
                     self.slotPause()
 
-            # else:
-            #     self.cap.release()
-            #     self.timer_camera.stop()  # 停止计时器
-
-    # def detection(self):
-    #     self.detectFlag = not self.detectFlag  # 取反
-    #     if self.detectFlag == True:
-    #         self.btn_detect.setStyleSheet("QPushButton{background:green;}")
-    #     else:
-    #         self.btn_detect.setStyleSheet("QPushButton{background:red;}")
-    # #        self.label_num.setText("There are 5 people.")
 
     def changevalue(self):
         self.timer_camera.start(self.timefps)
@@ -498,9 +425,6 @@ class Video(QWidget):
     def subfuc(self):
         #这个函数主要用于我在拖动滑动条的时候，能够每拖动一段，就显示一些图片。
         #同时这个函数也能让我在最终松开滑动条的时候能够显示此时的图片，无论是不是暂停的状态
-        # Time=(self.sld.value()/self.fcount)*self.seccount#是秒
-        # self.start_time=self.start_time-(Time*1000-self.curtime)
-        # print(str(Time*1000)+"     "+str(self.start_time))
 
         # 这里减一，是因为后面的self.cap.read()会从下一个开始读
         #如果这里减一就正好
@@ -514,18 +438,7 @@ class Video(QWidget):
         #鼠标画框的函数
         global img
         img = frame
-        # cv2.namedWindow('image')
 
-        # while True:
-        #cv2.setMouseCallback('image', self.on_mouse())
-        # cv2.startWindowThread() # 加在这个位置
-
-        #cv2.imshow('image', img)
-
-        # key = cv2.waitKey(0)
-
-        # if key == 13 or key == 32:  # 按空格和回车键退出
-        #     break
         global clean_out
         clean_out=False
 
@@ -555,10 +468,8 @@ class Video(QWidget):
         new_left_label = int(50+6 + (self.left / self.frame_all) * (900-16) )
         self.left_label.move(new_left_label, 500)
 
-
         new_right_label = int(50+6 + (self.right / self.frame_all) * (900-16))
         self.right_label.move(new_right_label, 500)
-
 
 
     def temp_clean(self):
@@ -573,16 +484,11 @@ class Video(QWidget):
         global text_2
         global text_3
 
-        # text_1 = '左: h({},{})({},{}) b({},{})({},{})'.format(0,0,0,0,0,0,0,0)
-        # text_2 = '中: h({},{})({},{}) b({},{})({},{})'.format(0,0,0,0,0,0,0,0)
-        # text_3 = '右: h({},{})({},{}) b({},{})({},{})'.format(0,0,0,0,0,0,0,0)
-
         # 最终决定输出文件格式后的要求：（去除了ball,加入了左右帧位置，去除了括号）
         text_0 = '{},{}'.format(0,0)
         text_1 = '{},{},{},{}'.format(0,0,0,0)
         text_2 = '{},{},{},{}'.format(0,0,0,0)
         text_3 = '{},{},{},{}'.format(0,0,0,0)
-
 
         self.label_store_data.setText(
             "文件名称:" + target_file_name +"\n"+
@@ -590,7 +496,6 @@ class Video(QWidget):
             text_0 + "\n" + text_1 + "\n" + text_2 + "\n" + text_3 + "\n"+
             "        按Enter键将数据导入文件")
 
-        #str(pos_human)+str(pos_ball) +
 
 
     def keyPressEvent(self, QKeyEvent):  # 键盘某个键被按下时调用
@@ -600,7 +505,6 @@ class Video(QWidget):
 
             #这个方法是按照我目前的拖动条上的指针的位置
             #temp_frame=int(self.cap.get(1))
-
 
             #这个方法是只按照左右边界的位置，计算出中心位置，然后让中心位置做新的左或者右边界
             temp_frame=int((self.left+self.right)/2)
@@ -613,15 +517,12 @@ class Video(QWidget):
 
 
             #实现右标签的变动
-            #self.right_label_change()
             self.label_change()
 
-            #print(str(self.left)+" "+str(target_frame)+" "+str(self.right))
 
         if QKeyEvent.key() == Qt.Key_Right and self.lock and self.left<self.right and self.left_right_lock==False:  # 判断是否按下了右键
             #这个方法是按照我目前的拖动条上的指针的位置
             #temp_frame=int(self.cap.get(1))
-
 
             #这个方法是只按照左右边界的位置，计算出中心位置，然后让中心位置做新的左或者右边界
             temp_frame=int((self.left+self.right)/2)
@@ -632,10 +533,7 @@ class Video(QWidget):
             self.memo.append([self.left, target_frame, self.right])
 
             #实现左标签的变动
-            #self.left_label_change()
-
             self.label_change()
-            #print(str(self.left)+" "+str(target_frame)+" "+str(self.right))
 
         if QKeyEvent.key() == Qt.Key_R and len(self.memo)>1 and self.lock  and self.left_right_lock==False:
             #这个函数是为了在二分法时进行回退
@@ -645,8 +543,6 @@ class Video(QWidget):
             self.sld.setValue(self.memo[-1][1])
             self.subfuc()
 
-            # self.right_label_change()
-            # self.left_label_change()
             self.label_change()
 
 
@@ -709,10 +605,8 @@ class Video(QWidget):
 
                 self.label_change()
 
-
                 target_frame = int((self.left + self.right) / 2)
                 self.memo.append([self.left, target_frame, self.right])
-
 
 
         if QKeyEvent.key() == Qt.Key_E and self.lock:
@@ -734,19 +628,13 @@ class Video(QWidget):
                     self.right+=1
                 self.label_change()
 
-
-
                 target_frame = int((self.left + self.right) / 2)
                 self.memo.append([self.left, target_frame, self.right])
 
         if QKeyEvent.key() == Qt.Key_W and self.lock:  # 打下左右标签的锁，只对左右标签有用，其他的地方无法锁
-            # print(self.sld.value())
-            # print(self.left)
-            # print(self.right)
             if self.sld.value()==self.left or self.sld.value()==self.right:
                 if self.left_right_lock==False:
                     # 在左或右的标签附近打上显眼的记号
-
 
                     if self.sld.value()==self.left:
                         self.target_label="left"
@@ -759,11 +647,9 @@ class Video(QWidget):
                 print("")
 
 
-        if QKeyEvent.key() == Qt.Key_O and self.lock:  # 判断是否按下了D键
+        if QKeyEvent.key() == Qt.Key_O and self.lock:  # 判断是否按下了O键
             print(self.left)
             print(self.right)
-
-
 
         global choice
         global pos_human
@@ -794,15 +680,6 @@ class Video(QWidget):
             ball_y1 = pos_ball[3]
 
             #通过目前滑动条的位置判断
-            # if self.sld.value()==self.memo[-1][0]:
-            #     text_1='左: h({},{})({},{}) b({},{})({},{})'.format(human_x0, human_y0, human_x1, human_y1,
-            #                                           ball_x0,ball_y0,ball_x1,ball_y1)
-            # elif self.sld.value()==self.memo[-1][1]:
-            #     text_2='中: h({},{})({},{}) b({},{})({},{})'.format(human_x0, human_y0, human_x1, human_y1,
-            #                                           ball_x0,ball_y0,ball_x1,ball_y1)
-            # elif self.sld.value()==self.memo[-1][2]:
-            #     text_3='右: h({},{})({},{}) b({},{})({},{})'.format(human_x0, human_y0, human_x1, human_y1,
-            #                                           ball_x0,ball_y0,ball_x1,ball_y1)
 
             #最终决定输出文件格式后的要求：（去除了ball,加入了左右帧位置，去除了括号）
             if self.sld.value()==self.memo[-1][0]:
@@ -814,7 +691,6 @@ class Video(QWidget):
                 text_0 = '{},{}'.format(self.memo[-1][0], self.memo[-1][2])
                 text_3='{},{},{},{}'.format(human_x0, human_y0, human_x1, human_y1,)
 
-            #self.label_store_data.setText("文件名称:"+target_file_name+"\n"+text_1+"\n"+text_2+"\n"+text_3+"\n"+str(pos_human)+str(pos_ball) +"\n" +"按Enter键将数据导入文件")
             self.label_store_data.setText(
                 "文件名称:" + target_file_name + "\n" +
                 "文件地址:" + target_file_path+"\n" +
@@ -823,7 +699,6 @@ class Video(QWidget):
 
 
         if QKeyEvent.key() == Qt.Key_M and self.lock:
-
             #先看文件是否已经存在了
             if os.path.exists(target_file_path+"/"+target_file_name[0:-4]+".txt"):
                 Warming = QMessageBox.warning(self, "Warming", "已经存在同名的文件了！！！",
@@ -837,15 +712,11 @@ class Video(QWidget):
             self.temp_clean()
 
 
+        #未来可能会用到的键组合
         if QKeyEvent.modifiers() == Qt.ControlModifier | Qt.ShiftModifier and QKeyEvent.key() == Qt.Key_A:  # 三键组合
             print('按下了Ctrl+Shift+A键')
 
         if QKeyEvent.modifiers() == Qt.ControlModifier and QKeyEvent.key() == Qt.Key_A:  # 两键组合
-                # modifiers()   判断修饰键
-                # Qt.NoModifier   没有修饰键
-                # Qt.ShiftModifier    Shift键被按下
-                # Qt.ControlModifier    Ctrl键被按下
-                # Qt.AltModifier      Alt键被按下
             print('按下了Ctrl-A键')
 
 
@@ -853,7 +724,6 @@ class Video(QWidget):
 
 
 global choice
-
 #这是一个数据，分别为x0,y0,x1,y1 然后再*2
 global pos_human
 global pos_ball
@@ -866,24 +736,16 @@ clean_out=True
 
 class myLabel(QLabel):
     #这里的方框需要在我使用stop和load或者导入新的视频文件后消除，不能留下来
-
-
     x0 = 0
     y0 = 0
     x1 = 0
     y1 = 0
     flag = False
-
     global choice
-
     choice=1
-
     human=QRect()
     ball=QRect()
-
     line_width=2
-
-
     global pos_human
     global pos_ball
 
@@ -899,8 +761,6 @@ class myLabel(QLabel):
             pos_human[1]=self.human.y()
             pos_human[2] =self.human.x() + self.human.width()
             pos_human[3] =self.human.y() + self.human.height()
-            # rect = QRect(self.x0, self.y0, self.x1 - self.x0, self.y1 - self.y0)
-            # self.rects.append(rect)
 
         if choice==2:
             self.ball=QRect(self.x0, self.y0, self.x1 - self.x0, self.y1 - self.y0)
@@ -923,14 +783,12 @@ class myLabel(QLabel):
         rect = QRect(self.x0, self.y0, self.x1 - self.x0, self.y1 - self.y0)
         painter = QPainter(self)
 
-
         #导入新视频或者stop或者load后，清空方框
         global clean_out
         if clean_out==False:
             self.human=QRect()
             self.ball=QRect()
             rect=QRect()
-
             #painter.drawRect(rect)
 
             #每次更换后，choice自动变为1，成为human
@@ -942,8 +800,6 @@ class myLabel(QLabel):
             global pos_ball
             pos_human=[0,0,0,0]
             pos_ball=[0,0,0,0]
-
-
 
 
         if choice==1:
@@ -959,13 +815,6 @@ class myLabel(QLabel):
             painter.setPen(QPen(Qt.red, self.line_width, Qt.SolidLine))
         #让我画框的动作连贯
         painter.drawRect(rect)
-
-
-
-        # pqscreen = QGuiApplication.primaryScreen()
-        # pixmap2 = pqscreen.grabWindow(self.winId(), self.x0, self.y0, abs(self.x1 - self.x0), abs(self.y1 - self.y0))
-        # pixmap2.save('555.png')
-
 
 
 if __name__ == "__main__":
