@@ -38,40 +38,40 @@ class myLabel(QLabel):
         pixmap2.save('555.png')
 
 
-# class Example(QWidget):
-#     def __init__(self):
-#         super().__init__()
-#         self.initUI()
-#
-#     def initUI(self):
-#         self.resize(675, 300)
-#         self.setWindowTitle('关注微信公众号：学点编程吧--opencv、PyQt5的小小融合')
-#
-#         self.lb = myLabel(self)
-#         self.lb.setGeometry(QRect(0, 30, 511, 241))
-#
-#         path = "C:/Users/LENOVO/Desktop/research/draw_bounding_box/target_pic/924.jpg"
-#
-#         img = cv2.imread(path)
-#         height, width, bytesPerComponent = img.shape
-#         bytesPerLine = 3 * width
-#         cv2.cvtColor(img, cv2.COLOR_BGR2RGB, img)
-#         QImg = QImage(img.data, width, height, bytesPerLine, QImage.Format_RGB888)
-#         pixmap = QPixmap.fromImage(QImg)
-#
-#         self.lb.setPixmap(pixmap)
-#         self.lb.setCursor(Qt.CrossCursor)
-#
-#         self.show()
-#
-# if __name__ == "__main__":
-#     app = QtWidgets.QApplication(sys.argv)
-#
-#     # MainWindow = QtWidgets.QMainWindow()  # 创建窗体对象
-#     # ui = document.Ui_MainWindow()  # 创建PyQt设计的窗体对象
-#     # ui.setupUi(MainWindow)  # 调用PyQt窗体方法，对窗体对象初始化设置
-#     # MainWindow.show()  # 显示窗体
-#
-#     my = Example()
-#     my.show()
-#     sys.exit(app.exec_())
+class Example(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.resize(675, 300)
+        self.setWindowTitle('关注微信公众号：学点编程吧--opencv、PyQt5的小小融合')
+
+        self.lb = myLabel(self)
+        self.lb.setGeometry(QRect(0, 30, 511, 241))
+
+        path = r"C:\Work\python\python_project\video_for_graduation_project\draw_bounding_box\video\555.png"
+
+        img = cv2.imread(path)
+        height, width, bytesPerComponent = img.shape
+        bytesPerLine = 3 * width
+        cv2.cvtColor(img, cv2.COLOR_BGR2RGB, img)
+        QImg = QImage(img.data, width, height, bytesPerLine, QImage.Format_RGB888)
+        pixmap = QPixmap.fromImage(QImg)
+
+        self.lb.setPixmap(pixmap)
+        self.lb.setCursor(Qt.CrossCursor)
+
+        self.show()
+
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+
+    # MainWindow = QtWidgets.QMainWindow()  # 创建窗体对象
+    # ui = document.Ui_MainWindow()  # 创建PyQt设计的窗体对象
+    # ui.setupUi(MainWindow)  # 调用PyQt窗体方法，对窗体对象初始化设置
+    # MainWindow.show()  # 显示窗体
+
+    my = Example()
+    my.show()
+    sys.exit(app.exec_())

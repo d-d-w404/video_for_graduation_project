@@ -27,6 +27,6 @@ def video_player(cap):
 
 
 if __name__ == '__main__':
-    video_path = 'C:/Users/LENOVO/Desktop/1.mp4'
+    video_path = r'C:\Work\python\python_project\video_for_graduation_project\draw_bounding_box\video\1.mp4'
     cap = cv2.VideoCapture(video_path)
     video_player(cap)
