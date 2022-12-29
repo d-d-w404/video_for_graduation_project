@@ -78,15 +78,15 @@ class Video(QWidget):
 
 
         # 外框
-        self.resize(1400, 650)
+        self.resize(1400*2, 650*2)
         self.setWindowTitle("播放器-抽帧-boundingbox")
 
         # 图片label
         #self.label = QLabel(self)
         self.label=myLabel(self)
         self.label.setText("Waiting for video...")
-        self.label.setFixedSize(900, 450)  # width height
-        self.label.move(50, 50)
+        self.label.setFixedSize(900*2, 450*2)  # width height
+        self.label.move(50*2, 50*2)
         self.label.setStyleSheet("QLabel{background:black;}"
                                  "QLabel{color:lime;font-size:15px;font-weight:bold;font-family:宋体;}"
                                  )
@@ -95,8 +95,8 @@ class Video(QWidget):
         self.model = QDirModel()
         self.tree = QTreeView(self)
         self.tree.allColumnsShowFocus()
-        self.tree.move(960,0)
-        self.tree.setFixedSize(430,500)
+        self.tree.move(960*2,0)
+        self.tree.setFixedSize(430*2,500*2)
         self.tree.setModel(self.model)
         self.tree.setRootIndex(self.model.index(source_file_name))
         self.tree.clicked.connect(self.show_info)
@@ -107,12 +107,12 @@ class Video(QWidget):
         #左右边界的标签,每个视频由于帧数长度不同，所以开始的时候也需要不同的位置
         self.left_label=QLabel(self)
         self.left_label.setStyleSheet("QLabel{background:cyan;}")
-        self.left_label.setFixedSize(3,50)
+        self.left_label.setFixedSize(2,50*4)
         #self.left_label.move(50+1 +5,500)
 
         self.right_label=QLabel(self)
         self.right_label.setStyleSheet("QLabel{background:crimson;}")
-        self.right_label.setFixedSize(3,50)
+        self.right_label.setFixedSize(2,50*4)
         #self.right_label.move(950-1 -9,500)
 
 
@@ -125,8 +125,8 @@ class Video(QWidget):
                                "      右边界：" + str(self.right)+
                                "      投篮帧范围："+str(self.right-self.left)
                                )
-        self.label_num.setFixedSize(900, 50)  # width height
-        self.label_num.move(50, 0)
+        self.label_num.setFixedSize(900*2, 50*2)  # width height
+        self.label_num.move(50*2, 0)
         self.label_num.setStyleSheet("QLabel{background:lightsteelblue;}")
 
         #播放器滑动条
@@ -137,8 +137,8 @@ class Video(QWidget):
         self.sld.setSingleStep(1) # 设置单步值
         self.sld.setValue(1)# 设置初始值
         self.sld.setTickPosition(QSlider.TicksAbove)# 设置刻度线位置
-        self.sld.setFixedSize(900, 50)  # width height
-        self.sld.move(50, 525)
+        self.sld.setFixedSize(900*2, 50*2)  # width height
+        self.sld.move(50*2, 525*2)
         #self.sld.valueChanged.connect(self.changevalue)# 设置信号与槽
 
         self.sld.sliderPressed.connect(self.k1)
@@ -148,37 +148,37 @@ class Video(QWidget):
         # 开启视频按键
         self.btn = QPushButton(self)
         self.btn.setText("Load")
-        self.btn.setFixedSize(50,50)
-        self.btn.move(50, 580)
+        self.btn.setFixedSize(50*2,50*2)
+        self.btn.move(50*2, 580*2)
         self.btn.clicked.connect(self.slotStart)
 
         # 关闭视频按钮
         self.btn_stop = QPushButton(self)
         self.btn_stop.setText("Stop")
-        self.btn_stop.setFixedSize(50,50)
-        self.btn_stop.move(150, 580)
+        self.btn_stop.setFixedSize(50*2,50*2)
+        self.btn_stop.move(150*2, 580*2)
         self.btn_stop.clicked.connect(self.slotStop)
 
         # 暂停键
         self.btn_pause = QPushButton(self)
         self.btn_pause.setText("Pause")
-        self.btn_pause.setFixedSize(50,50)
-        self.btn_pause.move(250, 580)
+        self.btn_pause.setFixedSize(50*2,50*2)
+        self.btn_pause.move(250*2, 580*2)
         self.btn_pause.setStyleSheet("QPushButton{background:green;}")
         self.btn_pause.clicked.connect(self.slotPause)
 
         # 确定采集到的数据存放的文件夹地址
         self.btn_file_path = QPushButton(self)
         self.btn_file_path.setText("FILE_PATH")
-        self.btn_file_path.setFixedSize(100,50)
-        self.btn_file_path.move(350+300, 580)
+        self.btn_file_path.setFixedSize(100*2,50*2)
+        self.btn_file_path.move((350+300)*2, 580*2)
         self.btn_file_path.clicked.connect(self.slotFile)
 
         # 我的视频数据来源的文件夹
         self.btn_file_path = QPushButton(self)
         self.btn_file_path.setText("SOURCE_PATH")
-        self.btn_file_path.setFixedSize(100,50)
-        self.btn_file_path.move(350+150, 580)
+        self.btn_file_path.setFixedSize(100*2,50*2)
+        self.btn_file_path.move((350+150)*2, 580*2)
         self.btn_file_path.clicked.connect(self.slotSourceFile)
 
         # 键盘
@@ -196,8 +196,8 @@ class Video(QWidget):
         #self.label = QLabel(self)
         self.label_store_data=QLabel(self)
         self.label_store_data.setText("Bounding Box information:")
-        self.label_store_data.setFixedSize(430, 130)  # width height
-        self.label_store_data.move(960, 500)
+        self.label_store_data.setFixedSize(430*2, 130*2)  # width height
+        self.label_store_data.move(960*2, 500*2)
         self.label_store_data.setStyleSheet("QLabel{background:lightsteelblue;}"
                                  "QLabel{color:black;font-size:16px;font-weight:bold;font-family:宋体;}"
                                  )
@@ -207,7 +207,7 @@ class Video(QWidget):
         self.dialog = QDialog()
         self.button = QPushButton('Shift跳过', self.dialog)
         self.button.clicked.connect(self.dialog.close)
-        self.button.move(200, 50)
+        self.button.move(200*2, 50*2)
         self.dialog.setWindowTitle('成功导入信息！！！')
         #self.dialog.setWindowModality(Qt.ApplicationModal)
 
@@ -275,12 +275,12 @@ class Video(QWidget):
             # 左右标签的位置
             # 5和9实际上是让标签恰好对准拖动条开始和结束刻度的数据，是我试出来的
             # 而add则是不同的长度的视频的一刻度的位置不同
-            add = int((self.left / self.frame_all) * 900)
+            add = int((self.left / self.frame_all) * 900*2)
             #print(add)
-            self.left_label.move(50 + 1 + 5 + add, 500)
+            self.left_label.move((50 + 1 + 5 + add)*2, 500*2)
 
             # minus = int((1 / self.frame_all) * 900)
-            self.right_label.move(950 - 1 - 9, 500)
+            self.right_label.move((950 - 1 - 9)*2, 500*2)
 
             #通过导入新的视频，进度条也需要相应的改变
             self.sld.setMaximum(self.frame_all)
@@ -326,12 +326,12 @@ class Video(QWidget):
         # 左右标签的位置
         #5和9实际上是让标签恰好对准拖动条开始和结束刻度的数据，是我试出来的
         #而add则是不同的长度的视频的一刻度的位置不同
-        add = int((self.left / self.frame_all) * 900)
-        #print(add)
-        self.left_label.move(50 + 1 + 5 +add, 500)
+        add = int((self.left / self.frame_all) * 900*2)
+        print(add)
+        self.left_label.move((100+8+add), 500*2)
 
         # minus = int((1 / self.frame_all) * 900)
-        self.right_label.move(950 - 1 - 9, 500)
+        self.right_label.move((1900-8), 500*2)
 
         # 通过导入新的视频，进度条也需要相应的改变
         self.sld.setMaximum(self.frame_all)
@@ -416,9 +416,9 @@ class Video(QWidget):
                                        "      右边界：" + str(self.right) +
                                        "      投篮帧范围：" + str(self.right - self.left)
                                        )
-                self.label_num.setFixedSize(900, 50)  # width height
-                self.label_num.move(50, 0)
-                self.label_num.setStyleSheet("QLabel{background:aqua;}")
+                self.label_num.setFixedSize(900*2, 50*2)  # width height
+                self.label_num.move(50*2, 0)
+                self.label_num.setStyleSheet("QLabel{background:lightsteelblue;}")
 
 
                 height, width, bytesPerComponent = frame.shape
@@ -486,9 +486,9 @@ class Video(QWidget):
                                "      右边界：" + str(self.right)+
                                "      投篮帧范围："+str(self.right-self.left)
                                )
-        self.label_num.setFixedSize(900, 50)  # width height
-        self.label_num.move(50, 0)
-        self.label_num.setStyleSheet("QLabel{background:aqua;}")
+        self.label_num.setFixedSize(900*2, 50*2)  # width height
+        self.label_num.move(50*2, 0)
+        self.label_num.setStyleSheet("QLabel{background:lightsteelblue;}")
         height, width, bytesPerComponent = frame.shape
         bytesPerLine = bytesPerComponent * width
         q_image = QImage(frame.data, width, height, bytesPerLine,
@@ -497,11 +497,11 @@ class Video(QWidget):
 
     def label_change(self):
 
-        new_left_label = int(50+6 + (self.left / self.frame_all) * (900-16) )
-        self.left_label.move(new_left_label, 500)
+        new_left_label = int(100+8 + (self.left / self.frame_all) * (1800-16) )
+        self.left_label.move(new_left_label, 500*2)
 
-        new_right_label = int(50+6 + (self.right / self.frame_all) * (900-16))
-        self.right_label.move(new_right_label, 500)
+        new_right_label = int(100+8 + (self.right / self.frame_all) * (1800-16))
+        self.right_label.move(new_right_label, 500*2)
 
 
     def temp_clean(self):
@@ -744,7 +744,7 @@ class Video(QWidget):
                 "文件名称:" + target_file_name + "\n" +
                 "文件地址:" + target_file_path+"\n" +
                 text_0 + "\n" + text_1 + "\n" + text_2 + "\n" + text_3 + "\n" +
-                "        按Enter键将数据导入文件")
+                "        按M键将数据导入文件")
 
 
         if QKeyEvent.key() == Qt.Key_M and self.lock:
