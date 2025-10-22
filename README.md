@@ -84,7 +84,7 @@ python draw_bounding_box/video/video.py
 ## How to Use
 
 ### 1. Initial Setup
-
+![Annotation Process](images/introduce.png)
 #### Setting File Paths
 - **SOURCE_PATH**: Click the "SOURCE_PATH" button to set the directory containing your video files
 - **FILE_PATH**: Click the "FILE_PATH" button to set the output directory for annotation data
@@ -127,7 +127,7 @@ python draw_bounding_box/video/video.py
    - Drag box edges to resize
    - Drag box center to move
 
-![Annotation Process](images/x.png)
+![Annotation Process](images/anno.png)
 *Bounding box drawing and adjustment*
 
 3. **Save Annotation**:
