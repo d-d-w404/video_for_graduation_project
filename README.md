@@ -9,7 +9,7 @@ A PyQt5-based video annotation tool designed for bounding box labeling in video 
 ```
 Sports_Annotation_Tool/
 ├── /Main
-│   ├── video/
+│   ├── Main/
 │   │   ├── video.py              # Main application file
 │   │   ├── find_bounding_box.py  # Bounding box detection utilities
 │   │   ├── image_processing.py   # Image processing functions
