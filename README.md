@@ -127,6 +127,9 @@ python draw_bounding_box/video/video.py
    - Drag box edges to resize
    - Drag box center to move
 
+![Annotation Process](images/x.png)
+*Bounding box drawing and adjustment*
+
 3. **Save Annotation**:
    - Press **Space**: Save current frame annotation
    - Press **M**: Export all annotations to file
