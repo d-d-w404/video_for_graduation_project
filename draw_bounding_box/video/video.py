@@ -79,7 +79,7 @@ class Video(QWidget):
 
         # 外框
         self.resize(1400*2, 650*2)
-        self.setWindowTitle("播放器-抽帧-boundingbox")
+        self.setWindowTitle("label_tool")
 
         # 图片label
         #self.label = QLabel(self)
@@ -119,11 +119,11 @@ class Video(QWidget):
 
         # 显示人数label
         self.label_num = QLabel(self)
-        self.label_num.setText("视频相关信息：" +
-                               "      帧数：" + str(round(self.frame_count, 2))+
-                               "      左边界：" + str(self.left)+
-                               "      右边界：" + str(self.right)+
-                               "      投篮帧范围："+str(self.right-self.left)
+        self.label_num.setText("video info：" +
+                               "      n_frame：" + str(round(self.frame_count, 2))+
+                               "      L_limit：" + str(self.left)+
+                               "      R_limit：" + str(self.right)+
+                               "      frame_range："+str(self.right-self.left)
                                )
         self.label_num.setFixedSize(900*2, 50*2)  # width height
         self.label_num.move(50*2, 0)
@@ -205,10 +205,10 @@ class Video(QWidget):
 
         #成功对话框
         self.dialog = QDialog()
-        self.button = QPushButton('Shift跳过', self.dialog)
+        self.button = QPushButton('Shift skip', self.dialog)
         self.button.clicked.connect(self.dialog.close)
         self.button.move(200*2, 50*2)
-        self.dialog.setWindowTitle('成功导入信息！！！')
+        self.dialog.setWindowTitle('loading sucessfully！！！')
         #self.dialog.setWindowModality(Qt.ApplicationModal)
 
 
@@ -410,11 +410,11 @@ class Video(QWidget):
 
                 # 显示人数label
                 #self.label_num = QLabel(self)
-                self.label_num.setText("视频相关信息：" +
-                                       "      帧数：" + str(round(self.frame_count, 2)) +
-                                       "      左边界：" + str(self.left) +
-                                       "      右边界：" + str(self.right) +
-                                       "      投篮帧范围：" + str(self.right - self.left)
+                self.label_num.setText("video info：" +
+                                       "      n_frame：" + str(round(self.frame_count, 2)) +
+                                       "      L_limit：" + str(self.left) +
+                                       "      R_limit：" + str(self.right) +
+                                       "      frame_range：" + str(self.right - self.left)
                                        )
                 self.label_num.setFixedSize(900*2, 50*2)  # width height
                 self.label_num.move(50*2, 0)
@@ -477,14 +477,14 @@ class Video(QWidget):
 
         self.frame_count = int(self.cap.get(1))
         self.sld.setValue(self.frame_count)
-        self.label_num.setText("视频相关信息：" +
-                               "      帧数：" + str(round(self.frame_count, 2))+
+        self.label_num.setText("video info：" +
+                               "      n_frame：" + str(round(self.frame_count, 2))+
                                # "      视频时间"+str(round(self.cap.get(0),2))+
                                # "      真实时间"+str(round(self.curtime,2))+
                                # "      图片间的时间间隔（ms）"+str(round(self.timefps,2))
-                               "      左边界：" + str(self.left)+
-                               "      右边界：" + str(self.right)+
-                               "      投篮帧范围："+str(self.right-self.left)
+                               "      L_limit：" + str(self.left)+
+                               "      R_limit：" + str(self.right)+
+                               "      frame_range："+str(self.right-self.left)
                                )
         self.label_num.setFixedSize(900*2, 50*2)  # width height
         self.label_num.move(50*2, 0)
@@ -523,10 +523,10 @@ class Video(QWidget):
         text_3 = '{},{},{},{}'.format(0,0,0,0)
 
         self.label_store_data.setText(
-            "文件名称:" + target_file_name +"\n"+
-            "文件地址:"+ target_file_path+"\n" +
+            "file name:" + target_file_name +"\n"+
+            "file loc:"+ target_file_path+"\n" +
             text_0 + "\n" + text_1 + "\n" + text_2 + "\n" + text_3 + "\n"+
-            "        按M键将数据导入文件")
+            "        Press M loading data to file")
 
 
 
@@ -741,10 +741,10 @@ class Video(QWidget):
                 text_3='{},{},{},{}'.format(human_x0, human_y0, human_x1, human_y1,)
 
             self.label_store_data.setText(
-                "文件名称:" + target_file_name + "\n" +
-                "文件地址:" + target_file_path+"\n" +
+                "file name:" + target_file_name + "\n" +
+                "file loc:" + target_file_path+"\n" +
                 text_0 + "\n" + text_1 + "\n" + text_2 + "\n" + text_3 + "\n" +
-                "        按M键将数据导入文件")
+                "        Press M loading data to file")
 
 
         if QKeyEvent.key() == Qt.Key_M and self.lock:
@@ -753,7 +753,7 @@ class Video(QWidget):
             target_file_name = target_file_name.replace(':', '#')
             #先看文件是否已经存在了
             if os.path.exists(target_file_path+"/"+target_file_name[0:-4]+".txt"):
-                Warming = QMessageBox.warning(self, "Warming", "已经存在同名的文件了！！！",
+                Warming = QMessageBox.warning(self, "Warming", "already existing same file！！！",
                                                    QMessageBox.Yes)
             else:
                 #有的时候可能忘记标注某些帧，这个部分用于提醒，并且防止残缺的数据进入数据集
@@ -761,7 +761,7 @@ class Video(QWidget):
                         (int(text_1.split(",")[0])==0 and int(text_1.split(",")[1])==0 and int(text_1.split(",")[2])==0 and int(text_1.split(",")[3])==0) or\
                         (int(text_2.split(",")[0]) == 0 and int(text_2.split(",")[1]) == 0 and int(text_2.split(",")[2]) == 0 and int(text_2.split(",")[3]) == 0) or\
                         (int(text_3.split(",")[0]) == 0 and int(text_3.split(",")[1]) == 0 and int(text_3.split(",")[2]) == 0 and int(text_3.split(",")[3]) == 0):
-                    Warming = QMessageBox.warning(self, "Warming", "您还有没有标注的帧！！！",
+                    Warming = QMessageBox.warning(self, "Warming", "have not label the frame！！！",
                                                   QMessageBox.Yes)
 
                 else:
@@ -781,10 +781,10 @@ class Video(QWidget):
 
         #未来可能会用到的键组合
         if QKeyEvent.modifiers() == Qt.ControlModifier | Qt.ShiftModifier and QKeyEvent.key() == Qt.Key_A:  # 三键组合
-            print('按下了Ctrl+Shift+A键')
+            print('press Ctrl+Shift+A ')
 
         if QKeyEvent.modifiers() == Qt.ControlModifier and QKeyEvent.key() == Qt.Key_A:  # 两键组合
-            print('按下了Ctrl-A键')
+            print('pree Ctrl-A')
 
 
 
