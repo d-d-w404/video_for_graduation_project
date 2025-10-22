@@ -2,7 +2,7 @@
 
 A PyQt5-based video annotation tool designed for bounding box labeling in video frames. This tool is particularly useful for computer vision projects, especially for preparing training data for object detection and tracking tasks.
 
-## 📁 Code Structure
+## Code Structure
 
 ### Main Components
 
@@ -57,7 +57,7 @@ source_file_name = ""  # Source video directory
 target_file_path = ""  # Output annotation directory
 ```
 
-## 🚀 Installation
+## Installation
 
 ### Prerequisites
 - Python 3.6+
@@ -81,7 +81,7 @@ pip install -r requirements.txt
 python draw_bounding_box/video/video.py
 ```
 
-## 📖 How to Use
+## How to Use
 
 ### 1. Initial Setup
 
@@ -172,7 +172,7 @@ Where:
 | **P** | Pause/resume video |
 | **Shift** | Close success dialog |
 
-## 🔧 Technical Details
+## Technical Details
 
 ### Binary Search Algorithm
 The tool implements a binary search algorithm for efficient frame navigation:
@@ -193,7 +193,7 @@ The tool implements a binary search algorithm for efficient frame navigation:
 - **Temporary storage**: Manages intermediate processing files
 - **File validation**: Checks for existing files and data completeness
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 1. **Video not loading**: Ensure video format is supported (.mp4, .avi)
@@ -206,7 +206,7 @@ The tool implements a binary search algorithm for efficient frame navigation:
 - Close other applications to free up memory
 - Ensure sufficient disk space for output files
 
-## 📝 Notes
+## Notes
 
 - The tool automatically pauses video when first loaded
 - Binary search is most effective for long videos
@@ -214,10 +214,10 @@ The tool implements a binary search algorithm for efficient frame navigation:
 - The interface supports both mouse and keyboard interaction
 - All annotations are saved in pixel coordinates
 
-## 🤝 Contributing
+##  Contributing
 
 Feel free to submit issues and enhancement requests. This tool is designed for academic and research purposes, particularly for computer vision projects requiring video annotation.
 
-## 📄 License
+##  License
 
 This project is intended for educational and research purposes. Please ensure compliance with any applicable licenses for the libraries used.
