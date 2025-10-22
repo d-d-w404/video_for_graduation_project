@@ -8,16 +8,25 @@ A PyQt5-based video annotation tool designed for bounding box labeling in video 
 
 ```
 Sports_Annotation_Tool/
-├── /Main
+├── Main/
 │   ├── Main/
 │   │   ├── video.py              # Main application file
-│   │   ├── find_bounding_box.py  # Bounding box detection utilities
-│   │   ├── image_processing.py   # Image processing functions
-│   │   └── other utility files...
+│   │   └── no_use/               # Legacy utility files
+│   │       ├── find_bounding_box.py  # Bounding box detection utilities
+│   │       ├── image_processing.py   # Image processing functions
+│   │       └── other utility files...
 │   ├── Binary_search_frame/      # Binary search implementation
-│   ├── store/                    # Stored annotation images
+│   │   ├── main.py              # Main binary search logic
+│   │   ├── search.py            # Search algorithms
+│   │   ├── load.py              # Video loading utilities
+│   │   ├── count.py             # Frame counting functions
+│   │   ├── delete.py            # File deletion utilities
+│   │   └── test.py              # Test files
+│   ├── build/                   # Build artifacts and executables
+│   ├── store/                   # Stored annotation images
 │   ├── target_pic/              # Target images for annotation
 │   └── temp_pic/                # Temporary image storage
+├── images/                      # Documentation images
 └── requirements.txt             # Python dependencies
 ```
 
@@ -78,7 +87,7 @@ pip install -r requirements.txt
 
 3. Run the application:
 ```bash
-python draw_bounding_box/video/video.py
+python Main/Main/video.py
 ```
 
 ## How to Use
